@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    body{
+        background-color: lightgrey;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+    }
+    
+    .section{
+        margin: 0;
+        display: flex;
+        height: 75%;
+        width: 75%;
+        background-color: white;
+    }
+
+    #profile {
+        flex: 1; 
+        background-color: white;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .profile-card{
+        text-align: center;
+        margin: 0;
+        padding: 10px;
+    }
+
+    img{
+        width: 80%;
+        height: auto;
+        margin: 0;
+        border-radius: 50%;
+    }
+
+    #favorites {
+        flex: 1; 
+        background-color: white;
+        display: flex;
+        align-items: justify;
+        flex-direction: column;
+        padding-left: 20px;
+    }
+
+    .profile-card h2,
+    .favorite-artists h2 {
+        margin: 0;
+    }
+
+    button{
+        background-color: blue;
+        color: white;
+        height: 50px;
+        border-radius: 15px;
+        border-color: blue;
+    }
+
+    .button {
+            align-self: flex-end;
+            margin-top: auto; /* This pushes the button to the bottom */
+            padding: 10px; /* Optional: Add padding for better appearance */
+        }
+
+</style>
+<body>
+    <div class="section">
+        <section id="profile">
+            <div class="profile-card">
+                <h2>Jane</h2>
+                <div class="profile-picture">
+                    <img src="profile.jpg">
+                </div>
+            </div>
+        </section>
+        <section id="favorites">
+            <div class="favorite-artists">
+                <h2>Favorite Music Artists</h2>
+                <ul>
+                    <li>Metaliica</li>
+                    <li>Bob Marley</li>
+                    <li>Madonna</li>
+                    <li>The Beatles</li>
+                    <li>Pink Floyd</li>
+                </ul>
+            </div>
+            <div class="favorite-films">
+                <h2>Favorite Films</h2>
+                <ol>
+                    <li>Pulp Fiction</li>
+                    <li>The Godfather</li>
+                    <li>The Lord of the Rings</li>
+                    <li>Iron Man</li>
+                    <li>Inception</li>
+                </ol>
+            </div>
+            <div class="button">
+                <button>My Meta Profile</button>
+            </div>
+        </section>
+    </div>
+</body>
+</html>
