@@ -1,0 +1,144 @@
+/* Global Styles */
+body {
+  background-color: hsl(0, 0%, 8%);
+  color: white;
+  font-family: Inter;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+}
+
+section {
+  background-color: hsl(0, 0%, 12%);
+  border-radius: 5px;
+  max-width: max-content;
+  padding: 25px;
+  width: 80%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+img {
+  border-radius: 50%;
+  display: block;
+  margin: 0 auto;
+  padding: 5px;
+  width: 80px;
+  height: 80px;
+}
+
+h1 {
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 10px; /* Reduced space between h1 and p */
+}
+
+p {
+  color: hsl(75, 94%, 57%);
+  font-weight: 600;
+  font-size: 14px;
+  margin-top: 0; /* Removed space above p */
+}
+
+q {
+  font-weight: 400;
+  font-size: 14px;
+}
+
+/* Unordered list and list items */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+}
+
+li {
+  background-color: hsl(0, 0%, 15%);
+  color: hsl(0, 0%, 100%);
+  padding: 10px 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  font-size: 1.2em;
+  width: 250px;
+  text-align: center;
+  display: block;
+  font-size: 14px;
+}
+
+li span {
+  display: block;
+  text-align: center;
+}
+
+li:hover {
+  background-color: hsl(75, 94%, 57%);
+  color: hsl(0, 0%, 8%);
+}
+
+/* Mobile Styles */
+@media screen and (max-width: 375px) {
+  section {
+    width: 90%; /* Make section take 90% of the screen width */
+    padding: 15px; /* Less padding for smaller screens */
+  }
+
+  h1 {
+    font-size: 1.5rem; /* Slightly smaller font size on mobile */
+  }
+
+  p {
+    font-size: 12px; /* Adjust the paragraph font size */
+  }
+
+  img {
+    width: 60px; /* Smaller image on mobile */
+    height: 60px;
+  }
+
+  ul {
+    width: 100%; /* List items take the full width */
+  }
+
+  li {
+    width: 80%; /* Make list items more compact */
+    font-size: 12px; /* Smaller font size for list items */
+  }
+}
+
+/* Desktop Styles */
+@media screen and (min-width: 1440px) {
+  section {
+    width: 50%; /* Set section to 50% of the screen width */
+    padding: 40px; /* More padding for larger screens */
+  }
+
+  h1 {
+    font-size: 2.5rem; /* Larger font size on desktop */
+  }
+
+  p {
+    font-size: 16px; /* Adjust the paragraph font size */
+  }
+
+  img {
+    width: 100px; /* Larger image on desktop */
+    height: 100px;
+  }
+
+  ul {
+    width: 100%; /* Full width for list on desktop */
+  }
+
+  li {
+    width: 300px; /* Slightly larger width for list items */
+    font-size: 16px; /* Larger font size for list items */
+  }
+}
