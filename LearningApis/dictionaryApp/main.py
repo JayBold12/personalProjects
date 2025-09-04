@@ -4,10 +4,7 @@ os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 import io
 import random
-
-
-def definitionError() -> str:
-    return("Either no definition in the database or failed to get definition from the database")
+import exceptions
 
 def partOfSpeechErrorCode(part:str) -> str:
     
@@ -83,10 +80,54 @@ def getPhonetics(word: str):
     else:
         print("Failed to retrieve phonetics")
 
-def getRandomPartOfSpeech() -> str:
-    speechParts = ("noun", "pronoun", "verb", "adjective", "adverb", "prepostion", "conjunction", "interjection")
-    return random.choice(speechParts)
-
+def getSynonyms(word:str, part:str) -> list:
+    url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
+    response = requests.get(url)
+        
+    if response.status_code == 200:
+        data = response.json()[0]["meanings"]
+        finder = None
+        for i in range(len(data)):
+            if data[i]['partOfSpeech'] == part:
+                finder = data[i]
+                break
+        if finder == None:
+            partOfSpeechErrorCode(part)
+        else:
+            synonyms = []
+            for i in range(len(finder["definitions"])):
+                synonyms.extend(finder["definitions"][i]["synonyms"])
+            if len(synonyms) < 1:
+                return []
+            else:
+                return(synonyms)
+    else:
+        return("Failed to retrieve synonymns(s)")
+    
+def getAntonyms(word:str, part:str) -> list:
+    url = "https://api.dictionaryapi.dev/api/v2/entries/en/" + word
+    response = requests.get(url)
+        
+    if response.status_code == 200:
+        data = response.json()[0]["meanings"]
+        finder = None
+        for i in range(len(data)):
+            if data[i]['partOfSpeech'] == part:
+                finder = data[i]
+                break
+        if finder == None:
+            partOfSpeechErrorCode(part)
+        else:
+            antonyms = []
+            for i in range(len(finder["definitions"])):
+                antonyms.extend(finder["definitions"][i]["antonyms"])
+            if len(antonyms) < 1:
+                return []
+            else:
+                return(antonyms)
+    else:
+        return("Failed to retrieve antonyms(s)")
+        
 def main():
     word = askForWord()
     part = askForPartOfSpeech()
@@ -95,6 +136,8 @@ def main():
         if definitions != None:
             for i in range(len(definitions)):
                 print(str(i+1) + ': ' + definitions[i])
+        synonyms = getSynonyms(word, part)
+        antonyms = getAntonyms(word, part)
     audio = getPhonetics(word)
     
 if __name__ == "__main__":
