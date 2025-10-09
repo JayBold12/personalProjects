@@ -1,70 +1,77 @@
-"""
-1. turn a epub file into a pdf
-
-IMPROVEMENTS
-hard coding the path of the output file -- fixed
-title of the output file--fixed
-loading for the output to produce--fixed in terminal
-one file vs multiple
-check file path
-location of the output file( default to desktop but optional to other places)
-loading for the output to produce"""
-
 import aspose.pdf as ap
-import tqdm
-import time
-from alive_progress import alive_bar
-from alive_progress.styles import showtime, Show
 import os
 import shutil
 
+def get_downloads_folder():
+    #get to the downloads folder on the computer
+    home_directory = os.path.expanduser('~')
+    downloads_path = os.path.join(home_directory, "Downloads")
+    return downloads_path
 
-#1.move the epub file from my downloads to my books folder
-source_path = r"path"
-source_files = []
-for filename in os.listdir(source_path):
-    if filename.endswith(".epub"):
-        full_path = os.path.join(source_path, filename)
-        source_files.append(full_path)
+def main():
+    #get to the downloads folder on the computer
+    home_directory = os.path.expanduser('~')
+    downloads_path = os.path.join(home_directory, "Downloads")
+    #look for pub files to convert to a pdf
+    epub_paths = []
+    for file in os.listdir(downloads_path):
+        if file.endswith(".epub"):
+            file_path = os.path.join(downloads_path, file)
+            epub_paths.append(file_path)
+    #find destination folder if it exists on the desktop directory
+    desktop_path = os.path.join(home_directory, "Desktop")
+    destination_path = os.path.join(desktop_path, "Books Test")
+    if not os.path.exists(destination_path):
+        os.makedirs(destination_path)
+    # try to send epubs to the destination
+    try:
+        for path in epub_paths:
+            shutil.move(path, destination_path)
+            print(f"path '{path}' move successfully to '{destination_path}'")
+    except FileNotFoundError:
+        print(f"Error: Source file '{file}' not found.")
+    except Exception as e:
+        print(f"An error occured: {e}")
+    #convert epub files in the new folder to pdfs
+    load_options = ap.EpubLoadOptions()
+    for file in os.listdir(destination_path):
+        if file.endswith(".epub"):
+            full_path = os.path.join(destination_path, file)
+            try:
+                document = ap.Document(full_path, load_options)
+                output_path = os.path.join(destination_path, f"{os.path.splitext(file)[0]}.pdf")
+                document.save(output_path)
+                print(f"Converted '{file}' to PDF at '{output_path}'")
+            except Exception as e:
+                print(f"Error converting '{file}': {e}")
 
-destination_path = r"path"
-if not os.path.exists(destination_path):
-    os.makedirs(destination_path)
+    #after conversion delete the old epub files
+    files_to_delete = []
+    for file in os.listdir(destination_path):
+        if file.endswith(".epub"):
+            print(f"{file}")
+            files_to_delete.append(file)
 
-try:
-    for file in source_files:
-        shutil.move(file, destination_path)
-        print(f"File '{file}' moved successfully to '{destination_path}'")
-except FileNotFoundError:
-    print(f"Error: Source file '{file}' not found.")
-except Exception as e:
-    print(f"An error occurred: {e}")
 
-#2. convert the epub file to a pdf
-#3. delete the epub file
+
 """
-# Create EpubLoadOptions
-for x in range(1):
-    with alive_bar(x, title="Loading", length=20, bar="bubbles") as bar:
-load_options = ap.EpubLoadOptions()
 
+# Specify the path to the file you want to delete
+file_path = "my_file.txt" 
 
-# Load the EPUB document into a Document object
-doc_path = input("Paste the path of the epub file here: ")
-#document = ap.Document(rf"{doc_path}", load_options)
-# Save the output as a PDF file
-
-output_title = ""
-index = -1
-for i in tqdm.tqdm(range(100)):
-    while doc_path[index] != '\\':
-        output_title += doc_path[index]
-        index -= 1
-    time.sleep(0.05)
-output_title = output_title[::-1]
-
-    
-#document.save(f"{output_title}.pdf")
-#print("EPUB converted to PDF successfully.")
-
+# Check if the file exists before attempting to delete it (optional but recommended)
+if os.path.exists(file_path):
+    try:
+        os.remove(file_path)
+        print(f"File '{file_path}' deleted successfully.")
+    except PermissionError:
+        print(f"Permission denied: Unable to delete '{file_path}'.")
+    except Exception as e:
+        print(f"An error occurred while deleting '{file_path}': {e}")
+else:
+    print(f"File '{file_path}' not found.")
 """
+
+
+if __name__ == "__main__":
+    main()
